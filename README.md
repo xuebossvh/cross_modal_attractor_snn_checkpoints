@@ -2,7 +2,7 @@
 
 Checkpoint files exported from local outputs/checkpoints.
 
-Total size: 6.39 GiB
+Total size: 7.07 GiB (36 checkpoint files)
 
 Files:
 - cross_modal_snn.pt (40.2 MB)
@@ -25,6 +25,10 @@ Files:
 - cross_modal_snn_v11c_control.pt (211.8 MB)
 - cross_modal_snn_v11d.pt (217.1 MB)
 - cross_modal_snn_v11d_control.pt (213.9 MB)
+- cross_modal_snn_v11e.pt (258.9 MiB)
+- cross_modal_snn_v11e_control.pt (257.7 MiB)
+- cross_modal_snn_v11f.pt (87.5 MiB)
+- cross_modal_snn_v11f_no_causal.pt (87.5 MiB)
 - cross_modal_snn_v2.pt (61.1 MB)
 - cross_modal_snn_v3.pt (61.1 MB)
 - cross_modal_snn_v4.pt (61.1 MB)
@@ -64,3 +68,23 @@ The `.pt` files are stored with Git LFS. Clone with Git LFS installed, then run
 | `cross_modal_snn_v11b_decoder_pretrain.pt` | `05515ac956fbc4319084329193556195d20adf83f2171625c547681e58379554` |
 | `cross_modal_snn_v11b_recovery_ep100.pt` | `25730624ef654d1f7d178a6bdbe64e85ccf20765529ed852a056790c8ba078c7` |
 | `cross_modal_snn_v11b_weighted.pt` | `7be817000b435a7943d3c6221f998f754bc89d5d0962b41aef96fa9135196622` |
+
+## v11f checkpoints (2026-09-10)
+
+Both v11f runs completed 30 additional epochs (`epoch=29`) from the same
+100-epoch v11e control (`epoch=99`). Each contains the full model state and
+48,736 adapter parameters, not only an adapter delta. The smaller files reflect
+the adapter-only optimizer state, not a missing backbone.
+
+| File | Bytes | SHA-256 |
+|---|---:|---|
+| `cross_modal_snn_v11f.pt` | 91702478 | `9b3c2a6fc47f6cb890c2cfd0a87564ce612e5b8424ef343607da8dfef1d95fc8` |
+| `cross_modal_snn_v11f_no_causal.pt` | 91704486 | `3951fadc830c0583a73e93340bc1906da5c7578544d478680fec990ace01359f` |
+| `cross_modal_snn_v11e_control.pt` (existing parent) | 270261261 | `5a792f10e57a95947c8e51bd915b09897baee01475103010826f25275b71501b` |
+
+All non-adapter parameters and buffers were compared with the parent and found
+bitwise identical. Recomputed base-state SHA-256:
+`92b2f7d6d2127376d59ba093ab86c787a34d6efb038b7e0054ebdbe5489fc02a`.
+Evaluation code/configs and the analysis report belong to the code repository's
+`v11f` branch. `v11f_control` uses the existing parent file; no separate control
+checkpoint is expected.
